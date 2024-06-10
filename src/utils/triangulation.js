@@ -57,11 +57,6 @@ export function triangulateImage(ctx, imageSrc, gridSize, jitter, blend) {
         fillTriangle(ctx, triangle2, data, width, height, blend);
       }
     }
-
-    // Draw the blended original image on top
-    ctx.globalAlpha = blend / 100;
-    ctx.drawImage(img, 0, 0, width, height);
-    ctx.globalAlpha = 1;
   };
 }
 
@@ -71,7 +66,7 @@ function jitterPoint(jitter) {
 
 function fillTriangle(ctx, points, data, width, height, blend) {
   const avgColor = getAverageColor(points, data, width, height);
-  ctx.fillStyle = `rgba(${avgColor.r}, ${avgColor.g}, ${avgColor.b}, ${blend})`;
+  ctx.fillStyle = `rgba(${avgColor.r}, ${avgColor.g}, ${avgColor.b}, ${blend / 100})`;
 
   ctx.beginPath();
   ctx.moveTo(points[0].x, points[0].y);
@@ -107,14 +102,14 @@ function getAverageColor(points, data, width, height) {
   addColor(Math.floor(points[0].x), Math.floor(points[0].y), 1);
   addColor(Math.floor(points[1].x), Math.floor(points[1].y), 1);
   addColor(Math.floor(points[2].x), Math.floor(points[2].y), 1);
-  
+
   // Add color of the centroid
   addColor(cx, cy, 4);
 
   // Calculate the average color
   return {
-    r: Math.floor(totalR / count),
-    g: Math.floor(totalG / count),
-    b: Math.floor(totalB / count),
+    r: totalR / count,
+    g: totalG / count,
+    b: totalB / count,
   };
 }

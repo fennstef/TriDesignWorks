@@ -62,15 +62,7 @@ export default {
         this.canvasHeight = img.height;
         this.$refs.canvas.width = this.canvasWidth;
         this.$refs.canvas.height = this.canvasHeight;
-        this.loadExampleImage();
-      };
-    },
-    loadExampleImage() {
-      const ctx = this.$refs.canvas.getContext('2d');
-      const img = new Image();
-      img.src = this.image;
-      img.onload = () => {
-        ctx.drawImage(img, 0, 0, this.canvasWidth, this.canvasHeight);
+        this.triangulate();
       };
     },
     triangulate() {
@@ -97,7 +89,7 @@ export default {
 <style scoped>
 #app {
   text-align: center;
-  background-color: #2c3e50;
+  background-color: #1c1c1c;
   color: white;
   min-height: 100vh;
   display: flex;
@@ -105,9 +97,6 @@ export default {
   align-items: center;
 }
 header {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
   padding: 1rem;
 }
 main {
